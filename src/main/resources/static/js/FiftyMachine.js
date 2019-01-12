@@ -7,6 +7,7 @@ var Element=function(){
 	this.Hirag = "あ";
 	this.Katak = "ア";
 }
+//五十音处理机
 var FiftyMachine = function() {
 	this.Rome = 0;
 	this.Hirag = 0;

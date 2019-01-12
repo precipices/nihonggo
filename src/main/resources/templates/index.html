@@ -12,16 +12,24 @@
                                      maximum-scale=1.0, 
                                      user-scalable=no">
 <title>日语五十音学习</title>
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<link href="/css/lib/bootstrap.min.css" rel="stylesheet">
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>
+<!-- 工具集 -->
 <script src="/js/MyUtil.js"></script>
+<!-- 前后端交互集 -->
+<script src="/js/myAjax.js"></script>
+<!-- 五十音处理器 -->
 <script src="/js/FiftyMachine.js"></script>
+<!-- 监听器集 -->
+<script src="/js/myListener.js"></script>
+
 <style type="text/css">
 .mydiv {
 	border: 1px solid gray
 }
 </style>
+<!-- 测试用，后删 -->
 <script type="text/javascript">
 	function test1() {
 		var str = "hello world! 你好";
@@ -29,42 +37,21 @@
 		console.log(msg);
 		window.speechSynthesis.speak(msg);
 	}
-	var FiftyJson;
-	//得到五十音json数组，并调用回调函数callback处理
-	function getFiftyKana(callback) {
-		$.ajax({
-			url : "json/fifty.txt",
-			type : "get",
-			// 			async : false,
-			success : function(data) {
-				callback(data);
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				alert("连接失败，没有获取到五十音值！" + XMLHttpRequest.status + " "
-						+ XMLHttpRequest.readyState + " " + textStatus);
-			},
-		});
-	}
-	var myMachine=new FiftyMachine();
-	//处理五十音json数组
-	function dealwithFifty(data) {
-		myMachine.init(data);
-// 		myMachine.Data=JSON.parse(data);
-// 		alert(myMachine.getRandomHirag());
-// 		alert(myMachine.Data.Hirag[2]);
-		// 		alert(FiftyJson.Rome[2]);
-		// 		alert(FiftyJson.FiftyKata[2]);
-	}
-	//初始化
+</script>
+<!-- 在页面加载前及加载后 要进行的初始化操作 -->
+<script type="text/javascript">
+	//创建一个五十音处理机
+	var myMachine = new FiftyMachine();
+	//初始化方法
 	function init() {
-		//加载五十音图
-		getFiftyKana(dealwithFifty);
+		//从后端获取五十音图,并载入新建的五十音处理机中
+		getFiftyKana(myMachine.init);
 	}
+	//调用初始化
+	init();
+	//页面加载后要进行的操作
 	$(function() {
-		init();
-// 		$.getJSON("json/fifty.txt", function(data) {
-// 			alert(data.Katak[10]);
-// 		})
+		
 	});
 </script>
 
@@ -78,12 +65,12 @@
 			<li><a>下载</a></li>
 		</ul>
 		<div class="row">
-			<input type="radio" name="selectType" value="Hirag" checked="checked"/>平假名 <input
-				type="radio" name="selectType" value="Katak" />片假名
+			<input type="radio" name="selectType" value="Hirag" checked="checked" />平假名
+			<input type="radio" name="selectType" value="Katak" />片假名
 		</div>
 		<div class="row" id="question">a</div>
 		<div class="row">
-		<textarea id="answer"></textarea>
+			<textarea id="answer"></textarea>
 		</div>
 	</div>
 </body>
