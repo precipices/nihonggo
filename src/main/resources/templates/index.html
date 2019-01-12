@@ -45,7 +45,9 @@
 	//初始化方法
 	function init() {
 		//从后端获取五十音图,并载入新建的五十音处理机中
-		getFiftyKana(myMachine.init);
+		getFiftyKana(function(data){
+			myMachine.init(data);
+		});
 	}
 	//调用初始化
 	init();
