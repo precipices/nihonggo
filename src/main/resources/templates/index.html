@@ -17,35 +17,60 @@
 <script src="/js/lib/bootstrap.min.js"></script>
 <!-- 工具集 -->
 <script src="/js/MyUtil.js"></script>
-<!-- 前后端交互集 -->
-<script src="/js/myAjax.js"></script>
 <!-- 五十音处理器 -->
 <script src="/js/FiftyMachine.js"></script>
+<!-- 全局变量集 -->
+<script src="/js/globalVar.js"></script>
+<!-- 前后端交互ajax集 -->
+<script src="/js/myAjax.js"></script>
 <!-- 监听器集 -->
 <script src="/js/myListener.js"></script>
-
 <style type="text/css">
-.mydiv {
+body {
+	font-family: 微软雅黑
+}
+
+.div-border {
 	border: 1px solid gray
 }
+
+.col-center-block {
+	float: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.center {
+	width: auto;
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.center2 {
+	margin: 0 auto;
+	display: block;
+	float: none;
+}
+
+.text-center {
+	text-align: center;
+}
 </style>
-<!-- 测试用，后删 -->
+<!-- 在页面加载前及加载后 要进行的初始化操作 -->
 <script type="text/javascript">
+	// 测试用，后删
 	function test1() {
 		var str = "hello world! 你好";
 		var msg = new SpeechSynthesisUtterance(str);
 		console.log(msg);
 		window.speechSynthesis.speak(msg);
 	}
-</script>
-<!-- 在页面加载前及加载后 要进行的初始化操作 -->
-<script type="text/javascript">
-	//创建一个五十音处理机
-	var myMachine = new FiftyMachine();
 	//初始化方法
 	function init() {
 		//从后端获取五十音图,并载入新建的五十音处理机中
-		getFiftyKana(function(data){
+		getFiftyKana(function(data) {
 			myMachine.init(data);
 		});
 	}
@@ -53,25 +78,29 @@
 	init();
 	//页面加载后要进行的操作
 	$(function() {
-		
+
 	});
 </script>
 
 </head>
 <body>
-	<div class="container mydiv">
-		<h1>日语五十音学习</h1>
+	<div class="container div-border">
+		<h1 class="center">
+			日语五十音学习<sup>v1.0</sup>
+		</h1>
 		<!-- 		菜单 -->
 		<ul class="nav nav-tabs">
 			<li class="active"><a>工具</a></li>
 			<li><a>下载</a></li>
 		</ul>
 		<div class="row">
-			<input type="radio" name="selectType" value="Hirag" checked="checked" />平假名
-			<input type="radio" name="selectType" value="Katak" />片假名
+			<input type="radio" name="selectType" value="all" checked="checked" />平片假名
+			<input type="radio" name="selectType" value="Hirag" />平假名 <input
+				type="radio" name="selectType" value="Katak" />片假名 <input
+				type="button" id="btn-begin" value="开始" />
 		</div>
-		<div class="row" id="question">a</div>
-		<div class="row">
+		<div class="row center " id="question" style="font-size: 40px">请点击开始按钮</div>
+		<div class="row center ">
 			<textarea id="answer"></textarea>
 		</div>
 	</div>
