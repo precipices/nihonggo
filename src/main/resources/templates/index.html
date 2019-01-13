@@ -15,16 +15,6 @@
 <link href="/css/lib/bootstrap.min.css" rel="stylesheet">
 <script src="/js/lib/jquery.min.js"></script>
 <script src="/js/lib/bootstrap.min.js"></script>
-<!-- 工具集 -->
-<script src="/js/MyUtil.js"></script>
-<!-- 五十音处理器 -->
-<script src="/js/FiftyMachine.js"></script>
-<!-- 全局变量集 -->
-<script src="/js/globalVar.js"></script>
-<!-- 前后端交互ajax集 -->
-<script src="/js/myAjax.js"></script>
-<!-- 监听器集 -->
-<script src="/js/myListener.js"></script>
 <style type="text/css">
 body {
 	font-family: 微软雅黑
@@ -58,6 +48,16 @@ body {
 	text-align: center;
 }
 </style>
+<!-- 工具集 -->
+<script src="/js/MyUtil.js"></script>
+<!-- 五十音处理器 -->
+<script src="/js/FiftyMachine.js"></script>
+<!-- 全局变量集 -->
+<script src="/js/globalVar.js"></script>
+<!-- 前后端交互ajax集 -->
+<script src="/js/myAjax.js"></script>
+<!-- 监听器集 -->
+<script src="/js/myListener.js"></script>
 <!-- 在页面加载前及加载后 要进行的初始化操作 -->
 <script type="text/javascript">
 	// 测试用，后删
@@ -74,11 +74,10 @@ body {
 			myMachine.init(data);
 		});
 	}
-	//调用初始化
-	init();
 	//页面加载后要进行的操作
 	$(function() {
-
+		//调用初始化
+		init();
 	});
 </script>
 
@@ -90,21 +89,19 @@ body {
 		</h1>
 		<!-- 		菜单 -->
 		<ul class="nav nav-tabs">
-			<li class="active"><a>开始</a></li>
-			<li><a>下载</a></li>
+			<li class="nav-item"><a class="nav-link active">开始</a></li>
+			<li class="nav-item"><a class="nav-link">下载</a></li>
 		</ul>
-		<div class="row">
-			<div class="row center" id="div-checkboxs">
-				<label><input type="checkbox" id="checkbox1" value="1" checked="checked"> 五十音平假名</label>
-				<label><input type="checkbox" id="checkbox2" value="10" checked="checked"> 五十音片假名</label>
-				<label><input type="checkbox" id="checkbox3" value="100" > 浊音平假名</label>
-				<label><input type="checkbox" id="checkbox4" value="1000" > 浊音片假名</label>
-				<label><input type="checkbox" id="checkbox5" value="10000" > 拗音平假名</label>
-				<label><input type="checkbox" id="checkbox6" value="100000" > 拗音片假名</label>
-			</div>
-			<div class="row center">
-				<input class="btn" type="button" id="btn-begin" value="开始" />
-			</div>
+		<div class="row center" id="div-checkboxs">
+			<label><input type="checkbox" id="checkbox1" value="1" checked="checked"> 五十音平假名</label>
+			<label><input type="checkbox" id="checkbox2" value="10" checked="checked"> 五十音片假名</label>
+			<label><input type="checkbox" id="checkbox3" value="100" > 浊音平假名</label>
+			<label><input type="checkbox" id="checkbox4" value="1000" > 浊音片假名</label>
+			<label><input type="checkbox" id="checkbox5" value="10000" > 拗音平假名</label>
+			<label><input type="checkbox" id="checkbox6" value="100000" > 拗音片假名</label>
+		</div>
+		<div class="row center">
+			<input class="btn" type="button" id="btn-begin" value="开始" />
 		</div>
 		<div class="row center " id="question" style="font-size: 40px">请点击开始按钮</div>
 		<div class="row center ">
