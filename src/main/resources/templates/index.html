@@ -90,14 +90,21 @@ body {
 		</h1>
 		<!-- 		菜单 -->
 		<ul class="nav nav-tabs">
-			<li class="active"><a>工具</a></li>
+			<li class="active"><a>开始</a></li>
 			<li><a>下载</a></li>
 		</ul>
 		<div class="row">
-			<input type="radio" name="selectType" value="all" checked="checked" />平片假名
-			<input type="radio" name="selectType" value="Hirag" />平假名 <input
-				type="radio" name="selectType" value="Katak" />片假名 <input
-				type="button" id="btn-begin" value="开始" />
+			<div class="row center" id="div-checkboxs">
+				<label><input type="checkbox" id="checkbox1" value="1" checked="checked"> 五十音平假名</label>
+				<label><input type="checkbox" id="checkbox2" value="10" checked="checked"> 五十音片假名</label>
+				<label><input type="checkbox" id="checkbox3" value="100" > 浊音平假名</label>
+				<label><input type="checkbox" id="checkbox4" value="1000" > 浊音片假名</label>
+				<label><input type="checkbox" id="checkbox5" value="10000" > 拗音平假名</label>
+				<label><input type="checkbox" id="checkbox6" value="100000" > 拗音片假名</label>
+			</div>
+			<div class="row center">
+				<input class="btn" type="button" id="btn-begin" value="开始" />
+			</div>
 		</div>
 		<div class="row center " id="question" style="font-size: 40px">请点击开始按钮</div>
 		<div class="row center ">

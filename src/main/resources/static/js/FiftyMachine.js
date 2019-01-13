@@ -24,6 +24,13 @@ var Clock = function() {
 		this.isRunning = 0;
 		return this.time;
 	}
+	// 如果正在计时中，关闭计时
+	this.close=function(){
+		if(this.isRunning == 1)
+			clearInterval(this.id);
+		this.isRunning = 0;
+		return this.time;
+	}
 }
 // 包含单个对应的罗马音、平片假名的一个元素
 var Element = function() {
@@ -40,66 +47,134 @@ var TimingElem = function() {
 // 五十音处理机
 var FiftyMachine = function() {
 	var clock = new Clock(); // 计时器
-	var point = 0; // ShuffleArray的指针
+	var point = 0; // SoundGroup的指针
 	var failedNum = 0; // 不及格的假名的数量
 	this.Data = new Object(); // 载入的五十音json数据
-	this.ArrayData = []; // 五十音顺序数组，元素为Element
-	this.ShuffleArray = []; // 五十音乱序数组，元素为TimingElement
+	this.FiftyData=[];// 五十音，顺序数组，元素为Element
+	this.VocalData=[];// 浊音，顺序数组，元素为Element
+	this.DiffData=[];// 拗音，顺序数组，元素为Element
+	this.SoundGroup = []; // 音节数组，题目的乱序数组，元素为TimingElement
 	this.level = 150; // 速度水平，时间超过level则该假名需重新听写
 	// 初始化,得到五十音图的json数组
 	this.init = function(data) {
 		// 载入json数据
-		this.Data = JSON.parse(data)
-		// 存入Element
-		for (var i = 0; i < this.Data.Rome.length; i++) {
+		this.Data = JSON.parse(data);
+		// 五十音，存入Element
+		for (var i = 0; i < this.Data.FiftyRome.length; i++) {
 			var e = new Element();
-			e.Rome = this.Data.Rome[i];
-			e.Hirag = this.Data.Hirag[i];
-			e.Katak = this.Data.Katak[i];
-			this.ArrayData.push(e);
+			e.Rome = this.Data.FiftyRome[i];
+			e.Hirag = this.Data.FiftyHirag[i];
+			e.Katak = this.Data.FiftyKatak[i];
+			this.FiftyData.push(e);
+		}
+		// 浊音，存入Element
+		for (var i = 0; i < this.Data.VocalRome.length; i++) {
+			var e = new Element();
+			e.Rome = this.Data.VocalRome[i];
+			e.Hirag = this.Data.VocalHirag[i];
+			e.Katak = this.Data.VocalKatak[i];
+			this.VocalData.push(e);
+		}
+		// 拗音，存入Element
+		for (var i = 0; i < this.Data.DiffRome.length; i++) {
+			var e = new Element();
+			e.Rome = this.Data.DiffRome[i];
+			e.Hirag = this.Data.DiffHirag[i];
+			e.Katak = this.Data.DiffKatak[i];
+			this.DiffData.push(e);
 		}
 	}
-	// 得到洗牌数组并洗一次牌
-	this.getShuffleArray = function() {
-		var random = parseInt(Math.random() * this.Data.Hirag.length);
-		return Shuffle(this.ShuffleArray);
+	// 音节数组重新洗牌
+	this.ShuffleSoundGroup = function() {
+		var random = parseInt(Math.random() * this.SoundGroup.length);
+		return Shuffle(this.SoundGroup);
 	}
-	this.start = function() {
+	// 根据参数命令初始化音节数组
+	// 五十音平假名,五十音片假名,浊音平假名,浊音片假名,拗音平假名, 拗音片假名
+	this.initSoundGroup=function(command){
+		this.SoundGroup=[];// 清空音节数组
+		if(!command){
+			command=1;// 默认加载五十音平假名
+		}
+		// 判断需要载入的数组
+		var list=[];
+		if(command%10){// 五十音平假名
+			list.push({array:this.FiftyData,type:0});
+		}
+		if(Math.floor(command%100/10)){// 五十音片假名
+			list.push({array:this.FiftyData,type:1});
+		}
+		if(Math.floor(command%1000/100)){// 浊音平假名
+			list.push({array:this.VocalData,type:0});
+		}
+		if(Math.floor(command%10000/1000)){// 浊音片假名
+			list.push({array:this.VocalData,type:1});
+		}
+		if(Math.floor(command%100000/10000)){// 拗音平假名
+			list.push({array:this.DiffData,type:0});
+		}
+		if(Math.floor(command%1000000/100000)){// 拗音片假名
+			list.push({array:this.DiffData,type:1});
+		}
+		// 载入数组
+		for(var j=0;j<list.length;j++){
+			var array=list[j].array;
+			if(list[j].type==0){
+				for (var i = 0; i < array.length; i++) {
+					var e = new TimingElem();
+					e.question = array[i].Hirag;
+					e.answer = array[i].Rome;
+					this.SoundGroup.push(e);
+				}
+			}else{
+				for (var i = 0; i < array.length; i++) {
+					var e = new TimingElem();
+					e.question = array[i].Katak;
+					e.answer = array[i].Rome;
+					this.SoundGroup.push(e);
+				}
+			}
+		}
+		
+// for (var i = 0; i < this.FiftyData.length; i++) {
+// var e = new TimingElem();
+// e.question = this.FiftyData[i].Hirag;
+// e.answer = this.FiftyData[i].Rome;
+// this.SoundGroup.push(e);
+// e = new TimingElem();
+// e.question = this.FiftyData[i].Katak;
+// e.answer = this.FiftyData[i].Rome;
+// this.SoundGroup.push(e);
+// }
+	}
+	// 开始测试
+	this.start = function(command) {
 		point = 0;// 指针清零
 		failedNum = 0;// 不及格数量清零
-		// 初始化洗牌数组
-		for (var i = 0; i < this.ArrayData.length; i++) {
-			var e = new TimingElem();
-			e.question = this.ArrayData[i].Hirag;
-			e.answer = this.ArrayData[i].Rome;
-			this.ShuffleArray.push(e);
-			e = new TimingElem();
-			e.question = this.ArrayData[i].Katak;
-			e.answer = this.ArrayData[i].Rome;
-			this.ShuffleArray.push(e);
-		}
-		this.getShuffleArray();// 重新洗牌
+		this.initSoundGroup(command);// 初始化音节数组
+		this.ShuffleSoundGroup();// 重新洗牌
+		clock.close();// 关闭计时
 		clock.start();// 开始计时
-		return this.ShuffleArray[point];
+		return this.SoundGroup[point];
 	}
+	// 测试下一个假名
 	this.next = function(answer) {
 		var time = clock.stop();// 关闭上一次计时
-		alert(time);
-		this.ShuffleArray[point].time = time;// 将时间计入假名元素中
+		this.SoundGroup[point].time = time;// 将时间计入假名元素中
 		var result = {
 			isEnd : 0
 		};// 返回值
 		var flag=false;
-		if(""+answer!=""+this.ShuffleArray[point].answer){// 检查假名是否正确
-			result.msg= "错误！"+this.ShuffleArray[point].question+"应该是："+this.ShuffleArray[point].answer;
-		}else if (point >= this.ShuffleArray.length - 1) {// 检查是否最后一个假名
+		if(""+answer!=""+this.SoundGroup[point].answer){// 检查假名是否正确
+			result.msg= "错误！"+this.SoundGroup[point].question+"应该是："+this.SoundGroup[point].answer;
+		}else if (point >= this.SoundGroup.length - 1) {// 检查是否最后一个假名
 			result.isEnd = 1;
 			// 开始计算平均耗时
 			var sum = 0;
-			for (var i = 0; i < this.ShuffleArray.length; i++) {
-				sum += ShuffleArray[i].time;
+			for (var i = 0; i < this.SoundGroup.length; i++) {
+				sum += SoundGroup[i].time;
 			}
-			var avg = sum / ShuffleArray.length;
+			var avg = sum / SoundGroup.length;
 			result.msg = "结束！<br/>平均用时：" + result.avg + "<br/>不及格假名数："
 					+ failedNum;
 			return result;
@@ -121,11 +196,11 @@ var FiftyMachine = function() {
 		point++;// 指针后移
 		if (!flag){// 有错误或用时不及格，将假名后移
 			failedNum++;
-			this.ShuffleArray.push(this.ShuffleArray[point]);
+			this.SoundGroup.push(this.SoundGroup[point]);
 		}
 		// 重新开始计时
 		clock.start();
-		result.e = this.ShuffleArray[point];
+		result.e = this.SoundGroup[point];
 		return result;
 	}
 }
