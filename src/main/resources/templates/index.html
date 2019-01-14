@@ -94,6 +94,7 @@ body {
 		<!-- 		菜单 -->
 		<ul class="nav nav-tabs">
 			<li class="nav-item"><a class="nav-link active">开始</a></li>
+			<li class="nav-item"><a class="nav-link"></a></li>
 			<li class="nav-item"><a class="nav-link">下载</a></li>
 		</ul>
 		<div class="row center" id="div-checkboxs">
@@ -104,8 +105,21 @@ body {
 			<label><input type="checkbox" id="checkbox5" value="10000" > 拗音平假名</label>
 			<label><input type="checkbox" id="checkbox6" value="100000" > 拗音片假名</label>
 		</div>
-		<div class="row center">
-			<input class="btn" type="button" id="btn-begin" value="开始" />
+		<div class="form-group row">
+		<div class="col-md-3"></div>
+		<div class="col-md-1"></div>
+			<label for="selectScope">level： </label>
+		<div class="col-md-1">
+				<select	id="selectScope" class="form-control">
+						<option value="100">快（1s）</option>
+						<option value="150" selected="selected">及格（1.5s）</option>
+						<option value="200">慢（2s）</option>
+						<option value="300">很慢（3s）</option>
+						<option value="10000">废了（100s）</option>
+				</select>
+			</div>
+			<div class="col-md-4">
+			<input class="btn" type="button" id="btn-begin" value="开始" /></div>
 		</div>
 		<div class="row center text-center" id="question" style="font-size: 40px">请点击开始按钮<br/>写出假名对应的罗马音,超时或写错会添加到队列后重新问答</div>
 		<div class="row center ">

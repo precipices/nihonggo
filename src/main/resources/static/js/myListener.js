@@ -37,4 +37,7 @@ $(function() {
 			$("#answer").val("");
 		}
 	});
+	$("#selectScope").on("change",function(){
+		myMachine.level=parseInt($(this).val());
+	});
 });
