@@ -71,18 +71,17 @@ body {
 		console.log(msg);
 		window.speechSynthesis.speak(msg);
 	}
-	var temp=function(data) {
-		myMachine.init(data);
-	}
 	//初始化方法
 	function init() {
 		//从后端获取五十音图,并载入新建的五十音处理机中
-		getFiftyKana(temp);
+		getFiftyKana(function(data) {
+			myMachine.init(data);
+		});
 	}
+	//调用初始化
+	init();
 	//页面加载后要进行的操作
 	$(function() {
-		//调用初始化
-		init();
 	});
 </script>
 
