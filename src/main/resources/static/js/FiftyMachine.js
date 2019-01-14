@@ -159,11 +159,14 @@ var FiftyMachine = function() {
 	}
 	// 测试下一个假名
 	this.next = function(answer) {
+		var result = {
+				isEnd : -1
+		};// 返回值
+		if(clock.isRunning==0){
+			return result;
+		}
 		var time = clock.stop();// 关闭上一次计时
 		this.SoundGroup[point].time = time;// 将时间计入假名元素中
-		var result = {
-			isEnd : 0
-		};// 返回值
 		var flag=false;
 		if(""+answer!=""+this.SoundGroup[point].answer){// 检查假名是否正确
 			result.msg= "错误！"+this.SoundGroup[point].question+"应该是："+this.SoundGroup[point].answer;
@@ -172,10 +175,10 @@ var FiftyMachine = function() {
 			// 开始计算平均耗时
 			var sum = 0;
 			for (var i = 0; i < this.SoundGroup.length; i++) {
-				sum += SoundGroup[i].time;
+				sum += this.SoundGroup[i].time;
 			}
-			var avg = sum / SoundGroup.length;
-			result.msg = "结束！<br/>平均用时：" + result.avg + "<br/>不及格假名数："
+			var avg = sum / this.SoundGroup.length;
+			result.msg = "结束！<br/>平均用时：" + avg + "<br/>不及格假名数："
 					+ failedNum;
 			return result;
 		}else{	// 检查用时是否及格
@@ -201,6 +204,7 @@ var FiftyMachine = function() {
 		// 重新开始计时
 		clock.start();
 		result.e = this.SoundGroup[point];
+		result.isEnd=0;
 		return result;
 	}
 }

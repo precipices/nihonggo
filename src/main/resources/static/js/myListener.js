@@ -22,7 +22,11 @@ $(function() {
 		if (event.keyCode == 13) {
 			//五十音处理器指向下一个假名
 			var result = myMachine.next($("#answer").val().trim());
-			if(result.isEnd==1){
+//			alert(result.isEnd);
+			if(result.isEnd==-1){
+				//结束
+				$("#question").html("请点击开始按钮<br/>写出假名对应的罗马音,超时或写错会添加到队列后重新问答");
+			}else if(result.isEnd==1){
 				//结束
 				$("#question").html(result.msg);
 			}else{
@@ -30,7 +34,7 @@ $(function() {
 				$("#question").html(result.msg+"<br/>下一个："+result.e.question);
 			}
 			//清空回答框
-			$("#answer").val("")
+			$("#answer").val("");
 		}
 	});
 });
