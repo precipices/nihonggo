@@ -177,7 +177,8 @@ var FiftyMachine = function() {
 			for (var i = 0; i < this.SoundGroup.length; i++) {
 				sum += this.SoundGroup[i].time;
 			}
-			var avg = sum / this.SoundGroup.length;
+			var avg = sum / this.SoundGroup.length/100;
+			avg=avg.toFixed(2);
 			result.msg = "结束！<br/>平均用时：" + avg + "<br/>不及格假名数："
 					+ failedNum;
 			return result;
