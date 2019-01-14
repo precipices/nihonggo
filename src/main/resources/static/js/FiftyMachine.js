@@ -197,11 +197,11 @@ var FiftyMachine = function() {
 			if(time<this.level)
 				flag=true;
 		}
-		point++;// 指针后移
 		if (!flag){// 有错误或用时不及格，将假名后移
 			failedNum++;
 			this.SoundGroup.push(this.SoundGroup[point]);
 		}
+		point++;// 指针后移
 		// 重新开始计时
 		clock.start();
 		result.e = this.SoundGroup[point];
