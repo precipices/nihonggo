@@ -98,16 +98,16 @@ body {
 			<li class="nav-item"><a class="nav-link">下载</a></li>
 		</ul>
 		<div class="row center" id="div-checkboxs">
-			<label><input type="checkbox" id="checkbox1" value="1" checked="checked"> 五十音平假名</label>
-			<label><input type="checkbox" id="checkbox2" value="10" checked="checked"> 五十音片假名</label>
+			<label><input type="checkbox" id="checkbox1" value="1"> 五十音平假名</label>
+			<label><input type="checkbox" id="checkbox2" value="10"> 五十音片假名</label>
 			<label><input type="checkbox" id="checkbox3" value="100" > 浊音平假名</label>
 			<label><input type="checkbox" id="checkbox4" value="1000" > 浊音片假名</label>
-			<label><input type="checkbox" id="checkbox5" value="10000" > 拗音平假名</label>
+			<label><input type="checkbox" id="checkbox5" value="10000" checked="checked"> 拗音平假名</label>
 			<label><input type="checkbox" id="checkbox6" value="100000" > 拗音片假名</label>
 		</div>
 		<div class="form-group row">
-		<div class="col-md-3"></div>
-		<div class="col-md-1"></div>
+		<div class="col-md-3 "></div>
+		<div class="col-md-1 "></div>
 			<label for="selectScope">level： </label>
 		<div class="col-md-1">
 				<select	id="selectScope" class="form-control">
@@ -121,10 +121,11 @@ body {
 			<div class="col-md-4">
 			<input class="btn" type="button" id="btn-begin" value="开始" /></div>
 		</div>
-		<div class="row center text-center" id="question" style="font-size: 40px">请点击开始按钮<br/>写出假名对应的罗马音,超时或写错会添加到队列后重新问答</div>
+		<div class="row center text-center" id="question" style="font-size: 20px">请点击开始按钮<br/>写出假名对应的罗马音,超时或写错会添加到队列后重新问答</div>
 		<div class="row center ">
 			<textarea id="answer"></textarea>
 		</div>
+		<div class="row " id="gradeDiv"></div>
 	</div>
 </body>
 </html>
