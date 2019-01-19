@@ -161,7 +161,7 @@ var FiftyMachine = function() {
 		 * 打开计时器，开始重新计时
 		 */
 		clock.start();// 开始计时
-		this.SoundGroup.length=2;
+		//this.SoundGroup.length=2;
 		return this.SoundGroup[point];
 	}
 	// 测试下一个假名
