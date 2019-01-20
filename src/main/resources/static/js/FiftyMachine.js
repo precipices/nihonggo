@@ -90,10 +90,18 @@ var FiftyMachine = function() {
 		var random = parseInt(Math.random() * this.SoundGroup.length);
 		return Shuffle(this.SoundGroup);
 	}
-	// 根据参数命令初始化音节数组
-	// 五十音平假名,五十音片假名,浊音平假名,浊音片假名,拗音平假名, 拗音片假名
+	// 
+	// 
+	/**
+	 * 根据参数命令初始化音节数组
+	 * 1.command: 问答范围，int的每一位表示包含一个范围，五十音平假名,五十音片假名,浊音平假名,浊音片假名,拗音平假名, 拗音片假名
+	 * 2.length: 数组长度,为-1(小于等于0)表示问答范围全长
+	 */
 	this.initSoundGroup=function(command){
 		this.SoundGroup=[];// 清空音节数组
+		/**
+		 * 根据command得到问答范围
+		 */
 		if(!command){
 			command=1;// 默认加载五十音平假名
 		}
@@ -117,7 +125,9 @@ var FiftyMachine = function() {
 		if(Math.floor(command%1000000/100000)){// 拗音片假名
 			list.push({array:this.DiffData,type:1});
 		}
-		// 载入数组
+		/**
+		 * 根据问答范围载入数组
+		 */ 
 		for(var j=0;j<list.length;j++){
 			var array=list[j].array;
 			if(list[j].type==0){
@@ -136,20 +146,9 @@ var FiftyMachine = function() {
 				}
 			}
 		}
-		
-// for (var i = 0; i < this.FiftyData.length; i++) {
-// var e = new TimingElem();
-// e.question = this.FiftyData[i].Hirag;
-// e.answer = this.FiftyData[i].Rome;
-// this.SoundGroup.push(e);
-// e = new TimingElem();
-// e.question = this.FiftyData[i].Katak;
-// e.answer = this.FiftyData[i].Rome;
-// this.SoundGroup.push(e);
-// }
 	}
 	// 开始测试
-	this.start = function(command) {
+	this.start = function(command,length) {
 		/**
 		 * 初始化五十音机器
 		 */
@@ -157,6 +156,11 @@ var FiftyMachine = function() {
 		this.initSoundGroup(command);// 初始化音节数组
 		this.ShuffleSoundGroup();// 重新洗牌
 		clock.close();// 关闭计时
+		/**
+		 * 限制数组长度
+		 */
+		if(length>0||length<this.SoundGroup.length)
+			this.SoundGroup.length=length;
 		/**
 		 * 打开计时器，开始重新计时
 		 */

@@ -6,8 +6,7 @@
 <!-- width 属性控制设备的宽度。假设您的网站将被带有不同屏幕分辨率的设备浏览，那么将它设置为 device-width 可以确保它能正确呈现在不同设备上。 -->
 <!-- initial-scale=1.0 确保网页加载时，以 1:1 的比例呈现，不会有任何的缩放。 -->
 <!-- 在移动设备浏览器上，通过为 viewport meta 标签添加 user-scalable=no 可以禁用其缩放（zooming）功能。 -->
-<meta name="viewport"
-	content="width=device-width, 
+<meta name="viewport" content="width=device-width, 
                                      initial-scale=1.0, 
                                      maximum-scale=1.0, 
                                      user-scalable=no">
@@ -97,31 +96,60 @@ body {
 			<li class="nav-item"><a class="nav-link"></a></li>
 			<li class="nav-item"><a class="nav-link">下载</a></li>
 		</ul>
-		<div class="row center" id="div-checkboxs">
-			<label><input type="checkbox" id="checkbox1" value="1"> 五十音平假名</label>
-			<label><input type="checkbox" id="checkbox2" value="10"> 五十音片假名</label>
-			<label><input type="checkbox" id="checkbox3" value="100" > 浊音平假名</label>
-			<label><input type="checkbox" id="checkbox4" value="1000" > 浊音片假名</label>
-			<label><input type="checkbox" id="checkbox5" value="10000" checked="checked"> 拗音平假名</label>
-			<label><input type="checkbox" id="checkbox6" value="100000" > 拗音片假名</label>
-		</div>
-		<div class="form-group row">
-		<div class="col-md-3 "></div>
-		<div class="col-md-1 "></div>
-			<label for="selectScope">level： </label>
-		<div class="col-md-1">
-				<select	id="selectScope" class="form-control">
+		<!-- 		控制栏 -->
+		<div class="">
+			<!-- 			<form class="form-inline" role="form"> -->
+			<div class="row form-check  form-check-inline" id="div-checkboxs">
+				<label class="form-check-label">
+					<input type="checkbox" id="checkbox1" class="form-check-input" value="1" /> 五十音平假名
+				</label>
+				<label class="form-check-label">
+					<input type="checkbox" id="checkbox2" class="form-check-input" value="10" /> 五十音片假名
+				</label>
+				<label class="form-check-label">
+					<input type="checkbox" id="checkbox3" class="form-check-input" value="100" /> 浊音平假名
+				</label>
+				<label class="form-check-label">
+					<input type="checkbox" id="checkbox4" class="form-check-input" value="1000" /> 浊音片假名
+				</label>
+				<label class="form-check-label">
+					<input type="checkbox" id="checkbox5" class="form-check-input" value="10000" checked="checked" /> 拗音平假名
+				</label>
+				<label class="form-check-label">
+					<input type="checkbox" id="checkbox6" class="form-check-input" value="100000" /> 拗音片假名
+				</label>
+			</div>
+
+			<div class="form-group row ">
+				<label for="numScope" class="form-inline">
+					数量: <select id="numScope" class="form-control">
+						<option value="-1" selected="selected">全部一遍</option>
+						<option value="1">随机1个</option>
+						<option value="10">随机10个</option>
+						<option value="20">随机20个</option>
+						<option value="30">随机30个</option>
+						<option value="40">随机40个</option>
+					</select>
+				</label>
+				<label for="timeScope" class="control-label form-inline">
+					限时: <select id="timeScope" class="form-control">
 						<option value="100">快（1s）</option>
 						<option value="150" selected="selected">及格（1.5s）</option>
 						<option value="200">慢（2s）</option>
 						<option value="300">很慢（3s）</option>
 						<option value="10000">废了（100s）</option>
-				</select>
+					</select>
+				</label>
 			</div>
-			<div class="col-md-4">
-			<input class="btn" type="button" id="btn-begin" value="开始" /></div>
+
+			<div class="row center">
+				<input class="btn" type="button" id="btn-begin" value="开始" />
+			</div>
+			<!-- 			</form> -->
 		</div>
-		<div class="row center text-center" id="question" style="font-size: 20px">请点击开始按钮<br/>写出假名对应的罗马音,超时或写错会添加到队列后重新问答</div>
+		<div class="row center text-center" id="question" style="font-size: 20px">
+			请点击开始按钮<br />写出假名对应的罗马音,回车进行下一个的问答,超时或写错会添加到队列后重新问答
+		</div>
 		<div class="row center ">
 			<textarea id="answer"></textarea>
 		</div>
