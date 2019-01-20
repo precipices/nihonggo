@@ -43,7 +43,7 @@ var TimingElem = function() {
 	this.question = "あ";
 	this.answer = "a"
 	this.time = 0;
-	this.isUnqualified=0;//0是合格，1是回答错误，2是回答超时
+	this.isUnqualified=0;// 0是合格，1是回答错误，2是回答超时
 	// this.mistakeAnswer="";
 }
 // 五十音处理机
@@ -158,14 +158,15 @@ var FiftyMachine = function() {
 		clock.close();// 关闭计时
 		/**
 		 * 限制数组长度
+		 * 只有当需求长度小于数组长度时会修改数组长度
 		 */
-		if(length>0||length<this.SoundGroup.length)
+		if(length>0&&length<this.SoundGroup.length)
 			this.SoundGroup.length=length;
 		/**
 		 * 打开计时器，开始重新计时
 		 */
 		clock.start();// 开始计时
-		//this.SoundGroup.length=2;
+		// this.SoundGroup.length=2;
 		return this.SoundGroup[point];
 	}
 	// 测试下一个假名
@@ -195,8 +196,8 @@ var FiftyMachine = function() {
 		this.SoundGroup[point].time = time;// 将时间计入假名元素中
 		var flag=false;// 判断假名是否需要重新问答
 		if(""+answer!=""+this.SoundGroup[point].answer){// 检查假名是否正确
-			this.SoundGroup[point].isUnqualified=1;//错误
-			this.SoundGroup[point].misAnswer=answer;//记录下错误回答
+			this.SoundGroup[point].isUnqualified=1;// 错误
+			this.SoundGroup[point].misAnswer=answer;// 记录下错误回答
 			result.msg= answer+"错误！"+this.SoundGroup[point].question+"应该是："+this.SoundGroup[point].answer;
 		}else{	// 检查用时是否及格
 			if (time < 100) {
@@ -213,7 +214,7 @@ var FiftyMachine = function() {
 			if(time<this.level)// 如果用时小于及格要求，不用重新问答
 				flag=true;
 			else
-				this.SoundGroup[point].isUnqualified=2;//超时
+				this.SoundGroup[point].isUnqualified=2;// 超时
 		}
 		if (!flag){// 有错误或用时不及格，将假名添加到问答队列末尾进行重新问答
 			var obj=CloneObject(this.SoundGroup[point]);// 复制错误的假名问答信息
@@ -261,12 +262,12 @@ var FiftyMachine = function() {
 		 */
 		var sum = 0;// 总耗时
 		var misNum=0;// 错误数量
-		var overNum=0;//超时数量
+		var overNum=0;// 超时数量
 		for (var i = 0; i < this.SoundGroup.length; i++) {
 			var isUnqualified=this.SoundGroup[i].isUnqualified;
 			if(isUnqualified==0){// 如果正确且不超时，则统计其时间
 				sum += this.SoundGroup[i].time;
-			}else if(isUnqualified==1){//错误，则错误数量加一
+			}else if(isUnqualified==1){// 错误，则错误数量加一
 				misNum++;
 			}else if(isUnqualified==2){// 超时，则超时数量加一，且统计其时间
 				overNum++;
@@ -291,7 +292,7 @@ var FiftyMachine = function() {
 				gradesTable+="<td></td></tr>";
 		}
 		gradesTable+="</table>";
-		//生成成绩单，并返回
+		// 生成成绩单，并返回
 		var gradeMsg={
 				avg:avg,
 				misNum:misNum,
